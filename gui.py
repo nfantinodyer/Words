@@ -12,8 +12,15 @@ frm_form = tk.Frame(relief=tk.SUNKEN, borderwidth=3)
 frm_form.pack()
 
 text_box = tk.Text(width=50, height=10)
+ans = tk.Entry()
 
-def check(length,word):
+def clear():
+    text_box.delete(1.0, tk.END)
+    ans.delete(0, tk.END)
+
+
+def check(length,word,reject):
+    clear()
     words=[]
     temp=[]
     
@@ -30,10 +37,17 @@ def check(length,word):
                 words=temp
                 temp=[]
    
+    for letter in reject:
+        for item in words:
+            if re.search(letter, item):
+                words.remove(item)
+    
     x=len(words)
+    ans.insert(0,str(x)+" results")
     print("The following "+str(x)+" words are "+str(length)+" letters long and contain the letters you entered: ")
     for item in words:
         text_box.insert(tk.END, item+"\n")
+    ans.pack()
 
 
 llabel = tk.Label(text="Enter the length of the word you want to find: ")
@@ -48,12 +62,17 @@ entrylabel.pack()
 entry = tk.Entry(width=50)
 entry.pack()
 
+rejectl = tk.Label(text="Enter the rejected letters: ")
+rejectl.pack()
 
-button = tk.Button(text="Search", width=10, height=2, command=lambda: check(int(l.get()),entry.get()))
+reject = tk.Entry(width=50)
+reject.pack()
+
+
+button = tk.Button(text="Search", width=10, height=2, command=lambda: check(int(l.get()),entry.get(),reject.get()))
 button.pack()
 
 text_box.pack()
-
 
 button = tk.Button(text="Exit", command=quit, width=10, height=2)
 button.pack()
