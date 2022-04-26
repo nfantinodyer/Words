@@ -53,6 +53,7 @@ def check(length, one, two, three, four, five, reject, cword):
         words=temp
         temp=[]
 
+    #find all words that are in the known char list
     for i in range(len(cword)):
         letter = cword[i]
         for o in words:
@@ -61,10 +62,7 @@ def check(length, one, two, three, four, five, reject, cword):
         words=temp
         temp=[]
     
-    if len(words) == 0:
-        text_box.insert(tk.END, "No words found")
-        return
-
+    #removes words that are in the reject list
     for letter in reject:
         for word in words:
             if re.search(letter, word):
@@ -86,6 +84,8 @@ def check(length, one, two, three, four, five, reject, cword):
     
     ans.pack(side = tk.BOTTOM, padx = 10, pady = 5)
     ans.config(state='disabled')
+
+
 
 
 #llabel = tk.Label(text="Enter the length of the word you want to find: ")
@@ -129,13 +129,6 @@ rejectl.pack(anchor=tk.W)
 
 reject = tk.Entry(width=20)
 reject.pack(anchor=tk.W,pady=5,padx=2)
-
-
-one.delete(1, tk.END)
-two.delete(1, tk.END)
-three.delete(1, tk.END)
-four.delete(1, tk.END)
-five.delete(1, tk.END)
 
 #int(l.get()) instead of 5
 button = tk.Button(text="Search", width=10, height=2, command=lambda: check(5,one.get(), two.get(), three.get(), four.get(), five.get(),reject.get(), entryword.get()))
