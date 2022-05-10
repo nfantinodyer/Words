@@ -48509,6 +48509,8 @@ gearing
 
 gears
 
+gecko
+
 gee
 
 geese
